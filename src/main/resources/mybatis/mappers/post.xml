@@ -16,7 +16,19 @@
 					 #{postContent},
 					 sysdate )
    	 	]]>
-	</insert>	
+	</insert>
+	
+	<select id="selectOne" parameterType="int" resultType="PostVo">
+		<![CDATA[
+			select postno postNo,
+				   cateno cateNo,
+				   posttitle postTitle,
+				   postcontent postContent,
+				   regdate regDate
+			from post
+			where postno = #{postNo}
+   	 	]]>
+	</select>	
 	
 	<select id="selectLast" parameterType="string" resultType="PostVo">
 		<![CDATA[

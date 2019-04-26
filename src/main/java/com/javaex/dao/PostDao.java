@@ -46,4 +46,8 @@ public class PostDao {
 		return sqlSession.selectOne("post.totalCount", cateNo);
 	}
 
+	public PostVo selectOne(int postNo) {
+		return sqlSession.selectOne("post.selectOne", postNo);
+	}
+
 }

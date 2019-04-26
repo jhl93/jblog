@@ -61,10 +61,10 @@
 						<c:forEach begin="${map.startPageBtnNo }" end="${map.endPageBtnNo }" step="1" var="page">
 							<c:choose>
 								<c:when test="${param.crtPage eq page }">
-									<li class="selected"><a href="${pageContext.request.contextPath}/${blogVo.id}?cateNo=${postVo.cateNo}&crtPage=${page}">${page}</a></li>
+									<li class="selected"><a href="${pageContext.request.contextPath}/${blogVo.id}?cateNo=${postVo.cateNo}&postNo=${postVo.postNo}&crtPage=${page}">${page}</a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="${pageContext.request.contextPath}/${blogVo.id}?cateNo=${postVo.cateNo}&crtPage=${page}">${page}</a></li>
+									<li><a href="${pageContext.request.contextPath}/${blogVo.id}?cateNo=${postVo.cateNo}&postNo=${postVo.postNo}&crtPage=${page}">${page}</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>

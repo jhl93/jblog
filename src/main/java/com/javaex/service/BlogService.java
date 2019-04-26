@@ -74,11 +74,10 @@ public class BlogService {
 				postVo = postList.get(0);
 			} else {
 				System.out.println("선택된 post");
-				for(PostVo vo : postList) {
-					if(vo.getPostNo() == postNo) {
-						postVo = vo;
-					}
-				}
+				/*
+				 * for(PostVo vo : postList) { if(vo.getPostNo() == postNo) { postVo = vo; } }
+				 */
+				postVo = postDao.selectOne(postNo);
 			}
 		}
 
