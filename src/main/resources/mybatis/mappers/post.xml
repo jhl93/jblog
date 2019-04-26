@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+
+	<insert id="insert" parameterType="PostVo">
+		<![CDATA[
+			insert into post ( postno,
+							   cateno,
+							   posttitle,
+							   postcontent,
+							   regdate )
+			values ( seq_post_no.nextval,
+					 #{cateNo},
+					 #{postTitle},
+					 #{postContent},
+					 sysdate )
+   	 	]]>
+	</insert>	
+	
+	<select id="selectLast" parameterType="string" resultType="PostVo">
+		<![CDATA[
+			select postno postNo,
+				   p.cateno cateNo,
+				   posttitle postTitle,
+				   postcontent postContent,
+				   p.regdate regDate
+			from post p join category c on p.cateno = c.cateno
+            where c.id = #{id}
+			and postno = (select max(postno) 
+						  from post p join category c on p.cateno = c.cateno
+            			  where c.id = #{id})
+   	 	]]>
+	</select>
+	
+	<select id="selectList" parameterType="map" resultType="PostVo">
+		<![CDATA[
+			select rnum,
+			       postNo,
+			       cateNo,
+			       postTitle,
+			       postContent,
+			       regDate
+			from (select rownum rnum,
+			             postNo,
+			             cateNo,
+			             postTitle,
+			             postContent,
+			             regDate
+			        from (select postno postNo,
+			                     cateno cateNo,
+			                     posttitle postTitle,
+			                     postcontent postContent,
+			                     regdate regDate
+			              from post
+			              where cateno = #{cateNo}
+			              order by postNo desc))
+			where rnum > #{startRnum} and rnum <= #{endRnum}
+   	 	]]>
+	</select>
+	
+	<select id="selectListByCate" parameterType="map" resultType="PostVo">
+		<![CDATA[
+			select rnum,
+			       postNo,
+			       cateNo,
+			       postTitle,
+			       postContent,
+			       regDate
+			from (select rownum rnum,
+			             postNo,
+			             cateNo,
+			             postTitle,
+			             postContent,
+			             regDate
+			        from (select postno postNo,
+			                     cateno cateNo,
+			                     posttitle postTitle,
+			                     postcontent postContent,
+			                     regdate regDate
+			              from post
+			              where cateno = #{cateNo}
+			              order by postNo desc))
+			where rnum > #{startRnum} and rnum <= #{endRnum}
+   	 	]]>
+	</select>
+	
+	<select id="totalCount" parameterType="int" resultType="int">
+		<![CDATA[
+			select count(*)
+			from post
+            where cateno = #{cateNo}
+            order by postNo desc
+   	 	]]>
+	</select>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+
+	<insert id="insert" parameterType="UserVo">
+		<![CDATA[
+			insert into category ( cateno,
+								   id,
+								   catename,
+								   description,
+								   regdate )
+			values ( seq_category_no.nextval,
+					 #{id},
+					 '미분류',
+					 '기본으로 만들어지는 카테고리 입니다.',
+					 sysdate )
+   	 	]]>
+	</insert>
+
+	<insert id="insertCate" parameterType="CategoryVo">
+		<selectKey keyProperty="cateNo" resultType="int" order="BEFORE">
+			select seq_category_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into category ( cateno,
+								   id,
+								   catename,
+								   description,
+								   regdate )
+			values ( #{cateNo},
+					 #{id},
+					 #{cateName},
+					 #{description},
+					 sysdate )
+   	 	]]>
+	</insert>
+
+	<select id="selectListById" parameterType="string" resultType="CategoryVo">
+		<![CDATA[
+			select c.cateNo, id, cateName, description, regDate, NVL(postCnt, 0) postCnt            
+			from (select cateno cateNo,
+						 id,
+						 catename cateName,
+						 description,
+						 regdate regDate
+				  from category 
+				  where id = #{id}) c
+				  left join (select post.cateno, count(*) postCnt
+				  from post
+				  group by post.cateno) p
+                  on c.cateNo = p.cateno
+			order by cateNo desc
+   	 	]]>
+	</select>
+	
+	<select id="selectOne" parameterType="CategoryVo" resultType="CategoryVo">
+		<![CDATA[
+			select c.cateNo, id, cateName, description, regDate, NVL(postCnt, 0) postCnt            
+			from (select cateno cateNo,
+						 id,
+						 catename cateName,
+						 description,
+						 regdate regDate
+				  from category 
+				  where cateno = #{cateNo}) c
+				  left join (select post.cateno, count(*) postCnt
+				  from post
+				  group by post.cateno) p
+                  on c.cateNo = p.cateno
+			order by cateNo desc
+   	 	]]>
+	</select>
+	
+	<delete id="delete" parameterType="CategoryVo">
+		<![CDATA[
+			delete category
+			where cateno = #{cateNo}
+   	 	]]>
+	</delete>
+</mapper>
