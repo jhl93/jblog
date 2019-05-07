@@ -135,7 +135,7 @@ public class BlogService {
 
 	public int modify(BlogVo blogVo, MultipartFile file) {
 		if (!file.getOriginalFilename().equals("")) {
-			String saveDir = "D:\\bitStudy\\upload";
+			String saveDir = "/home/bituser/upload";
 
 			// 오리지날 파일명
 			String orgName = file.getOriginalFilename();
@@ -150,7 +150,7 @@ public class BlogService {
 			System.out.println("saveName: " + saveName);
 
 			// 파일패스
-			String filePath = saveDir + "\\" + saveName;
+			String filePath = saveDir + "/" + saveName;
 			System.out.println("filePath: " + filePath);
 
 			// 파일사이즈

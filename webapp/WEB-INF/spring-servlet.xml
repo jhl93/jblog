@@ -58,7 +58,7 @@
 	</bean>
 
 	<!-- url매핑 -->
-	<mvc:resources mapping="/upload/**" location="file:D:/bitStudy/upload/" />
+	<mvc:resources mapping="/upload/**" location="file:/home/bituser/upload/" />
 
 	<!-- Interceptors -->
 	<mvc:interceptors>
